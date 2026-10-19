@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SMDMods — Minecraft Mod, Shader ve Kaynak Paketleri</title>
+<style>
+:root{--bg:#0b0813;--sf:#150f24;--sf2:#1e1633;--bd:#2c2245;--tx:#efeaf9;--mu:#a095bd;--ac:#a855f7;--ac2:#c084fc;--on:#fff;--ok:#34d399;--wa:#fb923c;--er:#f87171}
+[data-theme=light]{--bg:#f6f2fc;--sf:#fff;--sf2:#efe8fa;--bd:#dccfee;--tx:#1c1430;--mu:#66587f;--ac:#7c3aed;--ac2:#6d28d9;--on:#fff;--ok:#059669;--wa:#c2410c;--er:#b91c1c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 "Segoe UI",system-ui,sans-serif}
+a{color:var(--ac2);text-decoration:none}
+button,select,input{font:inherit;color:var(--tx)}
+.w{max-width:1120px;margin:0 auto;padding:0 16px}
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd)}
+.bar{display:flex;align-items:center;gap:10px;height:64px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;color:var(--tx)}
+.wm{font-weight:900;font-size:26px;letter-spacing:2px;line-height:1;background:linear-gradient(90deg,#e9d5ff,#a855f7 60%,#7c3aed);-webkit-background-clip:text;background-clip:text;color:transparent}
+[data-theme=light] .wm{background:linear-gradient(90deg,#7c3aed,#4c1d95);-webkit-background-clip:text;background-clip:text}
+.wm small{display:block;font-size:10px;font-weight:600;letter-spacing:.3px;color:var(--mu);-webkit-text-fill-color:var(--mu);margin-top:3px}
+.sp{flex:1}
+.btn,select,input{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:8px 12px}
+.btn{cursor:pointer;display:inline-flex;align-items:center;gap:6px}.btn:hover,select:hover{border-color:var(--ac)}
+.pri{background:linear-gradient(135deg,var(--ac),var(--ac2));border-color:transparent;color:var(--on);font-weight:700}
+.em{color:var(--mu);font-size:13px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+main{padding:20px 0 50px;min-height:70vh}
+.tabs{display:flex;gap:0;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid var(--bd)}
+.tab{padding:10px 4px;margin-right:22px;border:0;border-bottom:3px solid transparent;background:none;cursor:pointer;color:var(--mu);font-weight:600;border-radius:0}
+.tab.on{border-bottom-color:var(--ac);color:var(--tx)}
+.tools{display:grid;grid-template-columns:1fr repeat(3,auto);gap:8px;margin-bottom:16px}
+.tools input{width:100%}
+@media(max-width:720px){.tools{grid-template-columns:1fr 1fr}.tools input{grid-column:1/-1}}
+.card{display:flex;flex-direction:column;gap:12px;background:var(--sf);border:1px solid var(--bd);border-top:3px solid var(--ac);border-radius:14px;padding:16px;cursor:pointer;transition:transform .15s,border-color .15s}
+.card:hover{border-color:var(--ac);transform:translateY(-3px)}
+.ic{position:relative;width:76px;height:76px;flex:none;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,var(--sf2),var(--bd));display:grid;place-items:center;font-weight:800;font-size:28px;color:var(--ac2)}
+.ic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--sf2)}
+.in{flex:1;min-width:0}.in h3{margin:0;font-size:17px}.in h3 small{font-weight:400;color:var(--mu);font-size:13px}
+.in p{margin:3px 0 8px;color:var(--mu);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.tg{display:flex;gap:6px;flex-wrap:wrap}.tg i{font-style:normal;font-size:12px;padding:1px 10px;border-radius:99px;background:var(--sf2);color:var(--mu);text-transform:capitalize}
+.st{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin-top:auto;color:var(--mu);font-size:14px}.st .heart{margin-left:auto}
+.st b{color:var(--tx)}
+.heart{background:var(--sf2);border:1px solid var(--bd);border-radius:10px;padding:4px 10px;cursor:pointer;color:var(--mu)}
+.heart.on{color:#f43f5e;border-color:#f43f5e}.heart.big{padding:10px 14px;font-size:16px}
+.msg{text-align:center;color:var(--mu);padding:40px}.mid{text-align:center;margin-top:14px}
+.ttl{margin:0 0 14px}
+.ph{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;padding:20px;background:linear-gradient(135deg,var(--sf),var(--sf2));border:1px solid var(--bd);border-radius:18px;margin-bottom:18px}
+.ph .ic{width:110px;height:110px;font-size:40px}.ph .in h1{margin:0;font-size:26px}
+.act{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.act small{color:var(--mu)}
+.dlbig{padding:12px 22px;font-size:16px}
+.pt{display:flex;gap:22px;margin-bottom:16px;border-bottom:1px solid var(--bd);max-width:100%;overflow-x:auto}
+.pt a{padding:10px 2px;border-bottom:3px solid transparent;color:var(--mu);font-weight:600}.pt a.on{border-bottom-color:var(--ac);color:var(--tx)}
+.pg{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}.pg aside{order:-1}
+@media(max-width:880px){.pg{grid-template-columns:1fr}.pg aside{order:0}}
+.box{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:14px}
+.box h4{margin:0 0 8px;font-size:15px}.chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.chips span{font-size:12px;background:var(--sf2);padding:2px 9px;border-radius:99px;color:var(--mu)}
+.box a{display:block;padding:2px 0}
+.cr{display:flex;align-items:center;gap:8px;margin-bottom:6px}.cr img{width:28px;height:28px;border-radius:50%}
+.md{overflow-wrap:anywhere}.md img{max-width:100%;border-radius:8px}.md code{background:var(--sf2);padding:1px 5px;border-radius:5px}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.gal figure{margin:0;background:var(--sf);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.gal img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;cursor:zoom-in}.gal figcaption{padding:8px 12px;font-size:13px;color:var(--mu)}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;background:var(--sf);border:1px solid var(--bd);border-radius:12px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--bd);font-size:14px;vertical-align:middle}th{color:var(--mu);font-weight:600}
+.vt{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;font-weight:800;font-size:12px;margin-right:6px}
+.vr{background:#34d39933;color:var(--ok)}.vb{background:#fb923c33;color:var(--wa)}.va{background:#f8717133;color:var(--er)}
+.dlb{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:9px;background:var(--sf2);font-size:16px}.dlb:hover{background:var(--ac);color:var(--on)}
+.cl{border-bottom:1px solid var(--bd);padding:12px 0}.cl h4{margin:0 0 4px}
+#modal{position:fixed;inset:0;z-index:50;background:rgba(5,3,10,.75);display:none;place-items:center;padding:16px}
+#modal.on{display:grid}
+.dlg{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:22px;width:min(400px,100%);max-height:92vh;overflow:auto}
+.dlg h3{margin:0 0 12px}.dlg input{width:100%;margin:6px 0}.dlg .btn{width:100%;justify-content:center;margin-bottom:7px}
+.dlg hr{border:0;border-top:1px solid var(--bd);margin:14px 0}.note{color:var(--mu);font-size:13px}
+#modal img.lb{max-width:100%;max-height:90vh;border-radius:10px}
+footer{border-top:1px solid var(--bd);color:var(--mu);text-align:center;padding:22px 16px;font-size:13px}
+#res,.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}#res .msg,.grid .msg{grid-column:1/-1}.card .ic{width:64px;height:64px;font-size:24px}.hero{padding:34px 0 18px;background:radial-gradient(600px 200px at 8% 0,color-mix(in srgb,var(--ac) 24%,transparent),transparent)}.hero h1{margin:0 0 6px;font-size:clamp(26px,4vw,40px);line-height:1.15;letter-spacing:-.5px}.hero p{margin:0;color:var(--mu);max-width:56ch}.wm b{font-weight:300;letter-spacing:1px}
+</style>
+</head>
+<body>
+<header><div class="w bar" id="hd"></div></header>
+<main class="w" id="app"></main>
+<footer id="ft"></footer>
+<div id="modal"></div>
+<script>
+/* === AYARLAR: hesap sistemi için Supabase proje bilgilerini buraya gir === */
+var SUPA_URL="",SUPA_KEY="";
+/* Firebase Realtime Database adresi (sonunda / olmadan), örn: https://proje-adi-default-rtdb.europe-west1.firebasedatabase.app */
+var FB_URL="";
+var API="https://api.modrinth.com/v2";
+var L={tr:{
+tag:"Minecraft içerik merkezi",hero_t:"Minecraft için mod, shader ve paketler",hero_p:"Binlerce içeriği ara, sürümüne göre filtrele ve tek tıkla indir.",mod:"Modlar",resourcepack:"Kaynak Paketleri",shader:"Shader Paketleri",modpack:"Mod Paketleri",
+search:"Mod, shader veya paket ara…",allv:"Tüm sürümler",alll:"Tüm yükleyiciler",
+s_downloads:"En çok indirilen",s_follows:"En çok favorilenen",s_updated:"Son güncellenen",s_newest:"En yeni",s_relevance:"İlgililik",
+more:"Daha fazla yükle",none:"Sonuç bulunamadı. Filtreleri gevşetmeyi dene.",load:"Yükleniyor…",err:"Veri alınamadı. Bağlantını kontrol edip sayfayı yenile.",
+by:"geliştiren",dls:"indirme",fol:"favori",dl:"İndir",favs:"Favoriler",login:"Giriş yap",logout:"Çıkış",
+description:"Açıklama",gallery:"Galeri",changelog:"Değişiklikler",versions:"Sürümler",compat:"Uyumluluk",plat:"Platformlar",env:"Ortam",
+client:"İstemci tarafı",server:"Sunucu tarafı",links:"Bağlantılar",src:"Kaynak kodu",iss:"Hata bildir",wiki:"Wiki",disc:"Discord",lic:"Lisans",crt:"Geliştiriciler",
+gv:"Oyun sürümü",ldr:"Yükleyici",orig:"Modrinth sayfası",nofav:"Henüz favorin yok. Bir içeriğin kalbine dokun.",nogal:"Bu proje için görsel yok.",
+signin:"Giriş yap veya kayıt ol",orw:"veya e-posta ile",email:"E-posta adresi",send:"Kod gönder",code:"E-postana gelen kod",verify:"Doğrula ve gir",
+sent:"Kod gönderildi. E-postanı kontrol et.",setup:"Hesap sistemi henüz bağlı değil. index.html başındaki SUPA_URL ve SUPA_KEY alanlarını doldur.",needmail:"Doğrulanmış bir e-posta adresi zorunlu.",
+foot:"Projeler, görseller ve dosyalar Modrinth API'sinden gelir; telif hakkı geliştiricilerine aittir.",nover:"Bu filtreye uygun sürüm yok",pub:"Yayın",ver:"Sürüm"},
+en:{
+tag:"Minecraft content hub",hero_t:"Mods, shaders and packs for Minecraft",hero_p:"Search thousands of projects, filter by your version, and download in one click.",mod:"Mods",resourcepack:"Resource Packs",shader:"Shaders",modpack:"Modpacks",
+search:"Search mods, shaders or packs…",allv:"All versions",alll:"All loaders",
+s_downloads:"Most downloaded",s_follows:"Most followed",s_updated:"Recently updated",s_newest:"Newest",s_relevance:"Relevance",
+more:"Load more",none:"No results. Try loosening the filters.",load:"Loading…",err:"Couldn't load data. Check your connection and refresh.",
+by:"by",dls:"downloads",fol:"followers",dl:"Download",favs:"Favorites",login:"Sign in",logout:"Sign out",
+description:"Description",gallery:"Gallery",changelog:"Changelog",versions:"Versions",compat:"Compatibility",plat:"Platforms",env:"Environment",
+client:"Client-side",server:"Server-side",links:"Links",src:"Source code",iss:"Report issues",wiki:"Wiki",disc:"Discord",lic:"License",crt:"Creators",
+gv:"Game version",ldr:"Loader",orig:"Modrinth page",nofav:"No favorites yet. Tap the heart on any project.",nogal:"No images for this project.",
+signin:"Sign in or sign up",orw:"or with email",email:"Email address",send:"Send code",code:"Code from your email",verify:"Verify and continue",
+sent:"Code sent. Check your email.",setup:"Accounts aren't connected yet. Fill in SUPA_URL and SUPA_KEY at the top of index.html.",needmail:"A verified email address is required.",
+foot:"Projects, images and files come from the Modrinth API; copyright belongs to their creators.",nover:"No version matches this filter",pub:"Published",ver:"Version"}};
+var LD={mod:[["fabric","Fabric"],["forge","Forge"],["neoforge","NeoForge"],["quilt","Quilt"]],modpack:[["fabric","Fabric"],["forge","Forge"],["neoforge","NeoForge"],["quilt","Quilt"]],shader:[["iris","Iris"],["optifine","OptiFine"],["canvas","Canvas"],["vanilla","Vanilla"]],resourcepack:[]};
+var LOGO='<svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3e8ff"/><stop offset="1" stop-color="#c084fc"/></linearGradient><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a855f7"/><stop offset="1" stop-color="#6d28d9"/></linearGradient><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#2e1065"/></linearGradient></defs><polygon points="20,2 37,11.5 20,21 3,11.5" fill="url(#g1)"/><polygon points="3,11.5 20,21 20,39 3,29.5" fill="url(#g2)"/><polygon points="37,11.5 20,21 20,39 37,29.5" fill="url(#g3)"/><path d="M20 21v18M3 11.5l17 9.5 17-9.5" stroke="rgba(255,255,255,.4)" stroke-width=".8" fill="none"/><rect x="26" y="15" width="5" height="5" fill="#fff" opacity=".85" transform="skewY(30) translate(0,-14)"/></svg>';
+function sg(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}}
+function ss(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+var lang=sg("smd_lang",(navigator.language||"").slice(0,2)==="tr"?"tr":"en"),theme=sg("smd_theme",matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");
+var favs=sg("smd_favs",{}),sess=sg("smd_sess",null);
+var type="mod",q="",ver="",ldr="",sort="downloads",off=0,hits=[],seq=0,GV=[],GI={},REG={},CUR=null,vf="",vl="";
+var app=document.getElementById("app"),$=function(i){return document.getElementById(i)};
+function t(k){return L[lang][k]||k}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function num(n){return new Intl.NumberFormat(lang,{notation:"compact",maximumFractionDigits:1}).format(n||0)}
+function ago(d){var s=(new Date(d)-Date.now())/1000,u=[["year",31536000],["month",2592000],["day",86400],["hour",3600],["minute",60]],r=new Intl.RelativeTimeFormat(lang,{numeric:"auto"});for(var i=0;i<u.length;i++)if(Math.abs(s)>=u[i][1])return r.format(Math.round(s/u[i][1]),u[i][0]);return r.format(0,"second")}
+function api(p){return fetch(API+p).then(function(r){if(!r.ok)throw r.status;return r.json()})}
+function safe(u){return/^https?:\/\//i.test(u||"")?esc(u):""}
+function inl(s){return s.replace(/!\[([^\]]*)\]\((https?:[^)\s]+)[^)]*\)/g,'<img src="$2" alt="$1" loading="lazy">').replace(/\[([^\]]+)\]\((https?:[^)\s]+)[^)]*\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>').replace(/`([^`]+)`/g,"<code>$1</code>").replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>")}
+function md(s){s=String(s||"").replace(/<img[^>]*?src=["']([^"']+)["'][^>]*>/gi,"\n![]($1)\n").replace(/<br\s*\/?>/gi,"\n").replace(/<[^>]+>/g,"");s=esc(s);var o=[],ul=0;
+s.split("\n").forEach(function(l){var m=l.match(/^\s*[-*+]\s+(.*)/);if(m){if(!ul){o.push("<ul>");ul=1}o.push("<li>"+inl(m[1])+"</li>");return}if(ul){o.push("</ul>");ul=0}
+m=l.match(/^(#{1,6})\s+(.*)/);if(m){var n=Math.min(m[1].length+1,6);o.push("<h"+n+">"+inl(m[2])+"</h"+n+">")}else if(l.trim())o.push("<p>"+inl(l)+"</p>")});if(ul)o.push("</ul>");return o.join("")}
+function nm(h){return{id:h.project_id||h.id,slug:h.slug,title:h.title,desc:h.description,icon:h.icon_url||h.icon,type:h.project_type||h.type,author:h.author||"",dl:h.downloads!=null?h.downloads:h.dl,fol:h.follows!=null?h.follows:(h.followers!=null?h.followers:h.fol),cats:h.display_categories||h.categories||h.cats||[]}}
+function icon(p){return'<div class="ic"><span>'+esc((p.title||"?").charAt(0).toUpperCase())+"</span>"+(p.icon?'<img src="'+esc(p.icon)+'" alt="" loading="lazy" onerror="this.remove()">':"")+"</div>"}
+function heart(p,big){return'<button class="heart'+(big?" big":"")+(favs[p.id]?" on":"")+'" data-h="'+esc(p.id)+'" aria-label="'+t("favs")+'">♥</button>'}
+function card(p){REG[p.id]=p;return'<article class="card" data-slug="'+esc(p.slug)+'">'+icon(p)+'<div class="in"><h3>'+esc(p.title)+(p.author?" <small>"+t("by")+" "+esc(p.author)+"</small>":"")+"</h3><p>"+esc(p.desc)+'</p><div class="tg">'+p.cats.slice(0,4).map(function(c){return"<i>"+esc(c)+"</i>"}).join("")+'</div></div><div class="st"><span><b data-c="'+esc(p.id)+'|d">'+cn(p.id,"d")+"</b> "+t("dls")+'</span><span><b data-c="'+esc(p.id)+'|f">'+cn(p.id,"f")+"</b> "+t("fol")+"</span>"+heart(p)+"</div></article>"}
+/* ---------- canlı sayaçlar (Firebase Realtime Database) ---------- */
+var STATS={};
+function cn(id,k,v){var s=STATS[id]||{};return num(k=="v"?(s.v&&s.v[v])||0:s[k]||0)}
+function paintC(){document.querySelectorAll("[data-c]").forEach(function(el){var a=el.dataset.c.split("|");el.textContent=cn(a[0],a[1],a[2])})}
+function fbPut(path,delta){if(!FB_URL)return;fetch(FB_URL+"/stats/"+path+".json",{method:"PUT",body:JSON.stringify({".sv":{increment:delta}})}).catch(function(){})}
+function track(pid,vid){var d=sg("smd_dl",{}),key=pid+"|"+vid,now=Date.now();if(d[key]&&now-d[key]<864e5)return;d[key]=now;ss("smd_dl",d);fbPut(pid+"/d",1);fbPut(pid+"/v/"+vid,1)}
+function ap(path,data){var p=path.split("/").filter(Boolean),o;if(!p.length){STATS=data||{};return}o=STATS;for(var i=0;i<p.length-1;i++){if(typeof o[p[i]]!="object"||o[p[i]]===null)o[p[i]]={};o=o[p[i]]}var k=p[p.length-1];if(data===null)delete o[k];else o[k]=data}
+function live(){if(!FB_URL||!window.EventSource)return;var es=new EventSource(FB_URL+"/stats.json");
+es.addEventListener("put",function(e){var m=JSON.parse(e.data);ap(m.path,m.data);paintC()});
+es.addEventListener("patch",function(e){var m=JSON.parse(e.data);Object.keys(m.data||{}).forEach(function(k){ap(m.path+"/"+k,m.data[k])});paintC()})}
+/* ---------- header ---------- */
+function head(){document.documentElement.dataset.theme=theme;document.documentElement.lang=lang;
+$("hd").innerHTML='<a class="logo" href="#/">'+LOGO+'<span class="wm">SMD<b>Mods</b><small>'+t("tag")+'</small></span></a><div class="sp"></div><a class="btn" href="#/fav">♥ '+t("favs")+" ("+Object.keys(favs).length+')</a><button class="btn" id="th" aria-label="theme">'+(theme=="dark"?"☀":"☾")+'</button><select id="lang"><option value="tr">Türkçe</option><option value="en">English</option></select>'+(sess?'<span class="em">'+esc(sess.email)+'</span><button class="btn" data-a="out">'+t("logout")+"</button>":'<button class="btn pri" data-a="in">'+t("login")+"</button>");
+$("lang").value=lang;$("ft").textContent=t("foot")}
+/* ---------- browse ---------- */
+function opt(v,l,s){return'<option value="'+esc(v)+'"'+(v==s?" selected":"")+">"+esc(l)+"</option>"}
+function browse(){
+app.innerHTML='<section class="hero"><h1>'+t("hero_t")+"</h1><p>"+t("hero_p")+'</p></section><div class="tabs">'+["mod","resourcepack","shader","modpack"].map(function(k){return'<button class="tab'+(k==type?" on":"")+'" data-t="'+k+'">'+t(k)+"</button>"}).join("")+'</div><div class="tools"><input id="q" type="search" placeholder="'+esc(t("search"))+'" value="'+esc(q)+'"><select id="ver">'+opt("",t("allv"),ver)+GV.map(function(v){return opt(v,v,ver)}).join("")+"</select>"+(LD[type].length?'<select id="ldr">'+opt("",t("alll"),ldr)+LD[type].map(function(x){return opt(x[0],x[1],ldr)}).join("")+"</select>":"")+'<select id="sort">'+["downloads","follows","updated","newest","relevance"].map(function(k){return opt(k,t("s_"+k),sort)}).join("")+'</select></div><div id="res"></div><div class="mid"><button class="btn" id="more" hidden></button></div>';
+load(0)}
+function fac(){var f=[["project_type:"+type]];if(ver)f.push(["versions:"+ver]);if(ldr&&LD[type].length)f.push(["categories:"+ldr]);return JSON.stringify(f)}
+function load(more){var my=++seq;if(!more){off=0;hits=[];$("res").innerHTML='<div class="msg">'+t("load")+"</div>"}
+api("/search?query="+encodeURIComponent(q)+"&facets="+encodeURIComponent(fac())+"&index="+sort+"&limit=20&offset="+off).then(function(r){if(my!=seq||!$("res"))return;var h=r.hits.map(nm);hits=hits.concat(h);off+=h.length;$("res").innerHTML=hits.length?hits.map(card).join(""):'<div class="msg">'+t("none")+"</div>";var b=$("more");b.hidden=hits.length>=r.total_hits;b.textContent=t("more")}).catch(function(){if(my==seq&&$("res"))$("res").innerHTML='<div class="msg">'+t("err")+"</div>"})}
+function favPage(){var a=Object.keys(favs).map(function(k){return favs[k]});app.innerHTML='<h2 class="ttl">♥ '+t("favs")+"</h2><div class=\"grid\">"+(a.length?a.map(card).join(""):'<div class="msg">'+t("nofav")+"</div>")+"</div>"}
+/* ---------- project ---------- */
+function pick(vs){var ok=vs.filter(function(v){return(!ver||v.game_versions.indexOf(ver)>-1)&&(!ldr||v.loaders.indexOf(ldr)>-1)});var a=ok.length?ok:vs;return{v:a.find(function(v){return v.version_type=="release"})||a[0],ok:ok.length>0||(!ver&&!ldr)}}
+function fileOf(v){return v&&v.files&&(v.files.find(function(f){return f.primary})||v.files[0])}
+function showProject(slug,tab){if(CUR&&(CUR.p.slug==slug||CUR.p.id==slug))return drawP(tab);
+app.innerHTML='<div class="msg">'+t("load")+"</div>";
+Promise.all([api("/project/"+slug),api("/project/"+slug+"/version"),api("/project/"+slug+"/members").catch(function(){return[]})]).then(function(r){CUR={p:r[0],vs:r[1],mem:r[2]};vf="";vl="";drawP(tab)}).catch(function(){app.innerHTML='<div class="msg">'+t("err")+"</div>"})}
+function gsort(a){return a.slice().sort(function(x,y){return(GI[x]==null?999:GI[x])-(GI[y]==null?999:GI[y])})}
+function drawP(tab){var p=CUR.p,vs=CUR.vs,n=nm(p),pk=pick(vs),f=fileOf(pk.v),base="#/p/"+encodeURIComponent(p.slug)+"/";REG[n.id]=n;
+var dlb=f&&pk.ok?'<a class="btn pri dlbig" data-dl="'+esc(p.id)+"|"+esc(pk.v.id)+'" href="'+safe(f.url)+'" target="_blank" rel="noopener">⬇ '+t("dl")+'</a><small>'+esc(pk.v.version_number)+" · "+esc(f.filename)+"</small>":'<a class="btn pri dlbig" href="'+base+'versions">'+(f?t("nover"):"—")+"</a>";
+var tabs=["description","gallery","changelog","versions"].map(function(k){return'<a href="'+base+k+'" class="'+(k==tab?"on":"")+'">'+t(k)+"</a>"}).join("");
+var body="";
+if(tab=="gallery"){var g=(p.gallery||[]).slice().sort(function(a,b){return(a.ordering||0)-(b.ordering||0)});body=g.length?'<div class="gal">'+g.map(function(x){return"<figure><img src="+'"'+safe(x.url)+'" data-lb="'+safe(x.raw_url||x.url)+'" alt="" loading="lazy"><figcaption>'+esc(x.title||"")+"</figcaption></figure>"}).join("")+"</div>":'<div class="msg">'+t("nogal")+"</div>"}
+else if(tab=="changelog"){body=vs.slice(0,25).map(function(v){return'<div class="cl"><h4>'+esc(v.name||v.version_number)+' <small class="note">'+ago(v.date_published)+"</small></h4><div class=md>"+(md(v.changelog)||"<p class=note>—</p>")+"</div></div>"}).join("")}
+else if(tab=="versions"){var all={};vs.forEach(function(v){v.game_versions.forEach(function(g){all[g]=1})});var ls={};vs.forEach(function(v){v.loaders.forEach(function(g){ls[g]=1})});
+var rows=vs.filter(function(v){return(!vf||v.game_versions.indexOf(vf)>-1)&&(!vl||v.loaders.indexOf(vl)>-1)});
+body='<div class="tools" style="grid-template-columns:auto auto 1fr"><select id="vf">'+opt("",t("gv"),vf)+gsort(Object.keys(all)).map(function(g){return opt(g,g,vf)}).join("")+'</select><select id="vl">'+opt("",t("ldr"),vl)+Object.keys(ls).map(function(g){return opt(g,g,vl)}).join("")+'</select></div><div class="tw"><table><tr><th>'+t("ver")+"</th><th>"+t("gv")+"</th><th>"+t("ldr")+"</th><th>"+t("pub")+"</th><th>"+t("dls")+"</th><th></th></tr>"+rows.slice(0,100).map(function(v){var fl=fileOf(v),c={release:["vr","R"],beta:["vb","B"],alpha:["va","A"]}[v.version_type]||["vr","R"],g=gsort(v.game_versions);
+return'<tr><td><span class="vt '+c[0]+'">'+c[1]+"</span><b>"+esc(v.version_number)+"</b><br><small class=note>"+esc(v.name)+"</small></td><td>"+esc(g.slice(0,3).join(", "))+(g.length>3?" +"+(g.length-3):"")+"</td><td>"+esc(v.loaders.join(", "))+"</td><td>"+ago(v.date_published)+'</td><td><span data-c="'+esc(p.id)+"|v|"+esc(v.id)+'">'+cn(p.id,"v",v.id)+"</span></td><td>"+(fl?'<a class="dlb" data-dl="'+esc(p.id)+"|"+esc(v.id)+'" href="'+safe(fl.url)+'" target="_blank" rel="noopener" title="'+esc(fl.filename)+'">⬇</a>':"")+"</td></tr>"}).join("")+"</table></div>"}
+else body='<div class="md">'+md(p.body)+"</div>";
+var gv=gsort((p.game_versions||[]).filter(function(g){return GI[g]!=null})),side='<div class="box"><h4>'+t("compat")+'</h4><div class="note">Minecraft: Java Edition</div><div class="chips">'+gv.map(function(g){return"<span>"+esc(g)+"</span>"}).join("")+"</div><h4>"+t("plat")+'</h4><div class="chips">'+(p.loaders||[]).map(function(g){return"<span>"+esc(g)+"</span>"}).join("")+"</div><h4>"+t("env")+'</h4><div class="chips">'+(p.client_side&&p.client_side!="unsupported"?"<span>"+t("client")+"</span>":"")+(p.server_side&&p.server_side!="unsupported"?"<span>"+t("server")+"</span>":"")+"</div></div>";
+var lk=[[p.source_url,t("src")],[p.issues_url,t("iss")],[p.wiki_url,t("wiki")],[p.discord_url,t("disc")],["https://modrinth.com/"+p.project_type+"/"+p.slug,t("orig")]].filter(function(x){return safe(x[0])}).map(function(x){return'<a href="'+safe(x[0])+'" target="_blank" rel="noopener">'+x[1]+"</a>"}).join("");
+side+='<div class="box"><h4>'+t("links")+"</h4>"+lk+"</div>"+(p.license&&p.license.name?'<div class="box"><h4>'+t("lic")+"</h4>"+esc(p.license.name)+"</div>":"")+(CUR.mem.length?'<div class="box"><h4>'+t("crt")+"</h4>"+CUR.mem.map(function(m){return'<div class="cr"><img src="'+safe(m.user.avatar_url)+'" alt="" onerror="this.remove()"><span>'+esc(m.user.username)+"</span></div>"}).join("")+"</div>":"");
+app.innerHTML='<div class="ph">'+icon(n)+'<div class="in"><h1>'+esc(p.title)+"</h1><p>"+esc(p.description)+'</p><div class="tg"><i><span data-c="'+esc(p.id)+'|d">'+cn(p.id,"d")+"</span> "+t("dls")+'</i><i><span data-c="'+esc(p.id)+'|f">'+cn(p.id,"f")+"</span> "+t("fol")+"</i>"+(p.categories||[]).slice(0,4).map(function(c){return"<i>"+esc(c)+"</i>"}).join("")+'</div></div><div class="act">'+dlb+heart(n,1)+'</div></div><div class="pt">'+tabs+'</div><div class="pg"><div>'+body+"</div><aside>"+side+"</aside></div>"}
+/* ---------- auth ---------- */
+function su(path,body,extra){return fetch(SUPA_URL+"/auth/v1"+path,{method:body?"POST":"GET",headers:Object.assign({apikey:SUPA_KEY,"Content-Type":"application/json"},extra||{}),body:body?JSON.stringify(body):undefined}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.msg||j.error_description||j.message||r.status);return j})})}
+function modal(h){var m=$("modal");m.innerHTML=h;m.className=h?"on":""}
+function authUI(step,msg){var ps=[["google","Google"],["discord","Discord"],["github","GitHub"],["azure","Microsoft"],["twitch","Twitch"]];
+modal('<div class="dlg"><h3>'+t("signin")+"</h3>"+(SUPA_URL?"":'<p class="note">'+t("setup")+"</p>")+ps.map(function(x){return'<button class="btn" data-prov="'+x[0]+'">'+x[1]+"</button>"}).join("")+"<hr><div class=note>"+t("orw")+'</div><input id="em" type="email" autocomplete="email" placeholder="'+esc(t("email"))+'"'+(step?" readonly value=\""+esc(window._em)+'"':"")+">"+(step?'<input id="cd" inputmode="numeric" autocomplete="one-time-code" placeholder="'+esc(t("code"))+'"><button class="btn pri" data-a="verify">'+t("verify")+"</button>":'<button class="btn pri" data-a="send">'+t("send")+"</button>")+'<p class="note" id="am">'+esc(msg||"")+"</p></div>")}
+function login(tok,u){if(!u||!u.email||!(u.email_confirmed_at||u.confirmed_at))throw new Error(t("needmail"));sess={email:u.email,tok:tok};ss("smd_sess",sess);modal("");head()}
+function oauth(h){var P=new URLSearchParams(h.replace(/^#/,"")),tok=P.get("access_token");history.replaceState(null,"",location.pathname+"#/");
+su("/user",null,{Authorization:"Bearer "+tok}).then(function(u){login(tok,u)}).catch(function(e){alert(e.message)}).then(route)}
+/* ---------- events ---------- */
+document.addEventListener("click",function(e){var el=e.target,dl=el.closest("[data-dl]");if(dl){var da=dl.dataset.dl.split("|");track(da[0],da[1]);return}
+var b=el.closest("[data-h]");if(b){e.stopPropagation();var id=b.dataset.h;if(favs[id]){delete favs[id];fbPut(id+"/f",-1)}else if(REG[id]){favs[id]=REG[id];fbPut(id+"/f",1)}ss("smd_favs",favs);head();document.querySelectorAll('[data-h="'+id+'"]').forEach(function(x){x.classList.toggle("on",!!favs[id])});if(location.hash=="#/fav")favPage();return}
+if(b=el.closest("[data-t]")){type=b.dataset.t;ldr="";browse();return}
+if(el.closest("#more")){load(1);return}
+if(el.closest("#th")){theme=theme=="dark"?"light":"dark";ss("smd_theme",theme);head();return}
+if(b=el.closest("[data-prov]")){if(!SUPA_URL)return authUI(0,t("setup"));location.href=SUPA_URL+"/auth/v1/authorize?provider="+b.dataset.prov+"&redirect_to="+encodeURIComponent(location.origin+location.pathname);return}
+if(b=el.closest("[data-a]")){var a=b.dataset.a;
+if(a=="in")authUI(0);else if(a=="out"){sess=null;ss("smd_sess",null);head()}
+else if(a=="send"){var em=$("em").value.trim();if(!/^\S+@\S+\.\S+$/.test(em))return;if(!SUPA_URL)return authUI(0,t("setup"));window._em=em;su("/otp",{email:em,create_user:true}).then(function(){authUI(1,t("sent"))}).catch(function(x){$("am").textContent=x.message})}
+else if(a=="verify"){su("/verify",{type:"email",email:window._em,token:$("cd").value.trim()}).then(function(j){login(j.access_token,j.user)}).catch(function(x){$("am").textContent=x.message})}return}
+if(el.dataset.lb){modal('<img class="lb" src="'+el.dataset.lb+'" alt="">');return}
+if(el.id=="modal"||el.classList.contains("lb")){modal("");return}
+if(b=el.closest("[data-slug]")){location.hash="#/p/"+encodeURIComponent(b.dataset.slug)}});
+document.addEventListener("change",function(e){var i=e.target.id;
+if(i=="lang"){lang=e.target.value;ss("smd_lang",lang);head();route()}
+else if(i=="ver"){ver=e.target.value;load(0)}else if(i=="ldr"){ldr=e.target.value;load(0)}else if(i=="sort"){sort=e.target.value;load(0)}
+else if(i=="vf"){vf=e.target.value;drawP("versions")}else if(i=="vl"){vl=e.target.value;drawP("versions")}});
+var tm;document.addEventListener("input",function(e){if(e.target.id=="q"){clearTimeout(tm);tm=setTimeout(function(){q=e.target.value.trim();load(0)},350)}});
+document.addEventListener("keydown",function(e){if(e.key=="Escape")modal("")});
+function route(){var h=location.hash;if(h.indexOf("access_token=")>-1)return oauth(h);var m=h.match(/^#\/p\/([^\/]+)(?:\/(\w+))?/);
+if(m)showProject(decodeURIComponent(m[1]),m[2]||"description");else if(h=="#/fav")favPage();else browse()}
+window.addEventListener("hashchange",route);live();
+head();
+api("/tag/game_version").then(function(l){var r=l.filter(function(v){return v.version_type=="release"}).sort(function(a,b){return new Date(b.date)-new Date(a.date)}),i=r.findIndex(function(v){return v.version=="1.8.9"});if(i>-1)r=r.slice(0,i+1);GV=r.map(function(v){return v.version})}).catch(function(){GV=["1.21.4","1.21.1","1.20.6","1.20.4","1.20.1","1.19.4","1.18.2","1.17.1","1.16.5","1.12.2","1.8.9"]}).then(function(){GV.forEach(function(v,i){GI[v]=i});route()});
+</script>
+</body>
+</html>
