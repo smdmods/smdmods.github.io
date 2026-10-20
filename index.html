@@ -92,12 +92,9 @@ footer{border-top:1px solid var(--bd);color:var(--mu);text-align:center;padding:
 <footer id="ft"></footer>
 <div id="modal"></div>
 <script>
-/* === AYARLAR: hesap sistemi için Supabase proje bilgileri === */
-/* NOT: publishable anahtarı istemci tarafında görünür olacak şekilde tasarlanmıştır.
-   Güvenlik için Supabase panelinden RLS (Row Level Security) politikalarını mutlaka etkinleştirin. */
+/* === AYARLAR === */
 var SUPA_URL="https://jirmpglluekipvelkedf.supabase.co";
 var SUPA_KEY="sb_publishable_1Y4cH2zGvXq_QbyuQV20Sw_np4Osqwi";
-/* Firebase Realtime Database adresi (sonunda / olmadan) */
 var FB_URL="https://smdmods-default-rtdb.europe-west1.firebasedatabase.app";
 var API="https://api.modrinth.com/v2";
 
@@ -149,8 +146,7 @@ m=l.match(/^(#{1,6})\s+(.*)/);if(m){var n=Math.min(m[1].length+1,6);o.push("<h"+
 function nm(h){return{id:h.project_id||h.id,col:(h.color!=null?"#"+("000000"+Number(h.color).toString(16)).slice(-6):h.col),slug:h.slug,title:h.title,desc:h.description,icon:h.icon_url||h.icon,type:h.project_type||h.type,author:h.author||"",dl:h.downloads!=null?h.downloads:h.dl,fol:h.follows!=null?h.follows:(h.followers!=null?h.followers:h.fol),cats:h.display_categories||h.categories||h.cats||[]}}
 function icon(p){return'<div class="ic"><span>'+esc((p.title||"?").charAt(0).toUpperCase())+"</span>"+(p.icon?'<img src="'+esc(p.icon)+'" alt="" loading="lazy" onerror="this.remove()">':"")+"</div>"}
 function heart(p,big){return'<button class="heart'+(big?" big":"")+(favs[p.id]?" on":"")+'" data-h="'+esc(p.id)+'" aria-label="'+t("favs")+'">♥</button>'}
-function card(p){REG[p.id]=p;return'<article class="card"'+(p.col?' style="border-top-color:'+esc(p.col)+'"':"")+' data-slug="'+esc(p.slug)+'">'+icon(p)+'<div class="in"><h3>'+esc(p.title)+(p.author?" <small>"+t("by")+" "+esc(p.author)+"</small>":"")+"</h3><p data-x>"+esc(p.desc)+'</p><div class="tg">'+p.cats.slice(0,4).map(chip).join("")+'</div></div><div class="st"><span><b>'+num(p.dl)+"</b> "+t("dls")+'</span><span><b>'+num(p.fol)+"</b> "+t("fol")+"</span>"+heart(p)+"</div></article>"}
-/* ---------- diller ve çeviri motoru ---------- */
+function card(p){REG[p.id]=p;return'<article class="card"'+(p.col?' style="border-top-color:'+esc(p.col)+'"':"")+' data-slug="'+esc(p.slug)+'">'+icon(p)+'<div class="in"><h3>'+esc(p.title)+(p.author?" <small>"+t("by")+" "+esc(p.author)+"</small>":"")+"</h3><p data-x>"+esc(p.desc)+'</p><div class="tg">'+p.cats.slice(0,4).map(chip).join("")+'</div></div><div class="st"><span><b data-c="'+esc(p.id)+'|d|'+ (p.dl||0) +'">'+cn(p.id,"d",null,p.dl)+"</b> "+t("dls")+'</span><span><b data-c="'+esc(p.id)+'|f|'+ (p.fol||0) +'">'+cn(p.id,"f",null,p.fol)+"</b> "+t("fol")+"</span>"+heart(p)+"</div></article>"}
 var LDN=["fabric","forge","neoforge","quilt","iris","optifine","canvas","vanilla","minecraft","datapack","bukkit","spigot","paper","purpur","folia","sponge","bungeecord","velocity","waterfall","liteloader","modloader","rift"];
 function chip(c){var k=LDN.indexOf(c)<0;return"<i"+(k?" data-x":"")+">"+esc(k?c.replace(/-/g," "):c)+"</i>"}
 function loc(){try{Intl.getCanonicalLocales(lang);return lang}catch(e){return"en"}}
@@ -179,10 +175,14 @@ function dlUI(){var all={};CUR.vs.forEach(function(v){v.game_versions.forEach(fu
 modal('<div class="dlg dw"><button class="btn x" data-a="close" aria-label="'+esc(t("close"))+'">✕</button><div class="dh">'+icon(nm(CUR.p))+"<h3>"+t("dl")+" · "+esc(CUR.p.title)+'</h3></div><div class="dsel"><select id="dg">'+opt("",t("selgv"),dg)+gl.map(function(g){return opt(g,g,dg)}).join("")+'</select><select id="dlr"></select></div><div id="dr"></div></div>');dlSync()}
 function toast(s){var e=document.createElement("div");e.className="toast";e.textContent=s;document.body.appendChild(e);setTimeout(function(){e.remove()},1800)}
 function phStyle(p){var g=p.gallery||[],x=g.filter(function(y){return y.featured})[0]||g[0];return x&&/^https:\/\/cdn\.modrinth\.com\/[^'")\s]+$/.test(x.url)?' style="background-image:linear-gradient(90deg,var(--sf) 30%,transparent),url(\''+x.url+'\')"':""}
-/* ---------- canlı sayaçlar (Firebase Realtime Database) ---------- */
+
+/* ---------- Canlı sayaçlar (Modrinth + Firebase birleşik) ---------- */
 var STATS={};
-function cn(id,k,v){var s=STATS[id]||{};return num(k=="v"?(s.v&&s.v[v])||0:s[k]||0)}
-function paintC(){document.querySelectorAll("[data-c]").forEach(function(el){var a=el.dataset.c.split("|");el.textContent=cn(a[0],a[1],a[2])})}
+function cn(id,k,v,base){var s=STATS[id]||{},add=0;
+if(k=="v")add=(s.v&&s.v[v])||0;
+else add=s[k]||0;
+return num((base||0)+add);}
+function paintC(){document.querySelectorAll("[data-c]").forEach(function(el){var a=el.dataset.c.split("|");el.textContent=cn(a[0],a[1],a[2],a[3])})}
 function apl(path,d){var a=path.split("/"),o=STATS[a[0]]=STATS[a[0]]||{};if(a[1]=="v"){o.v=o.v||{};o.v[a[2]]=Math.max(0,(o.v[a[2]]||0)+d)}else o[a[1]]=Math.max(0,(o[a[1]]||0)+d);paintC()}
 function fbPut(path,delta){apl(path,delta);if(!FB_URL)return;fetch(FB_URL+"/stats/"+path+".json",{method:"PUT",body:JSON.stringify({".sv":{increment:delta}})}).then(function(r){if(!r.ok)throw 0}).catch(function(){apl(path,-delta)})}
 function track(pid,vid){var d=sg("smd_dl",{}),key=pid+"|"+vid,now=Date.now();if(d[key]&&now-d[key]<864e5)return;d[key]=now;ss("smd_dl",d);fbPut(pid+"/d",1);fbPut(pid+"/v/"+vid,1)}
@@ -190,10 +190,12 @@ function ap(path,data){var p=path.split("/").filter(Boolean),o;if(!p.length){STA
 function live(){if(!FB_URL||!window.EventSource)return;var es=new EventSource(FB_URL+"/stats.json");
 es.addEventListener("put",function(e){var m=JSON.parse(e.data);ap(m.path,m.data);paintC()});
 es.addEventListener("patch",function(e){var m=JSON.parse(e.data);Object.keys(m.data||{}).forEach(function(k){ap(m.path+"/"+k,m.data[k])});paintC()})}
+
 /* ---------- header ---------- */
 function head(){document.documentElement.dataset.theme=theme;document.documentElement.lang=lang;document.documentElement.dir=["ar","fa","he","ur"].indexOf(lang)>-1?"rtl":"ltr";
 $("hd").innerHTML='<a class="logo" href="#/">'+LOGO+'<span class="wm">SMD<b>Mods</b><small>'+t("tag")+'</small></span></a><div class="sp"></div><a class="btn" href="#/fav">♥ '+t("favs")+" ("+Object.keys(favs).length+')</a><button class="btn" id="th" aria-label="theme">'+(theme=="dark"?"☀":"☾")+'</button><button class="btn" data-a="lang">🌐 '+esc(LN())+'</button>'+(sess?'<span class="em">'+esc(sess.email)+'</span><button class="btn" data-a="out">'+t("logout")+"</button>":'<button class="btn pri" data-a="in">'+t("login")+"</button>");
 $("ft").textContent=t("foot")}
+
 /* ---------- browse ---------- */
 function opt(v,l,s){return'<option value="'+esc(v)+'"'+(v==s?" selected":"")+">"+esc(l)+"</option>"}
 function browse(){
@@ -203,6 +205,7 @@ function fac(){var f=[["project_type:"+type]];if(ver)f.push(["versions:"+ver]);i
 function load(more){var my=++seq;if(!more){off=0;hits=[];$("res").innerHTML='<div class="msg">'+t("load")+"</div>"}
 api("/search?query="+encodeURIComponent(q)+"&facets="+encodeURIComponent(fac())+"&index="+sort+"&limit=20&offset="+off).then(function(r){if(my!=seq||!$("res"))return;var h=r.hits.map(nm);hits=hits.concat(h);off+=h.length;$("res").innerHTML=hits.length?hits.map(card).join(""):'<div class="msg">'+t("none")+"</div>";var b=$("more");b.hidden=hits.length>=r.total_hits;b.textContent=t("more");xl($("res"))}).catch(function(){if(my==seq&&$("res"))$("res").innerHTML='<div class="msg">'+t("err")+"</div>"})}
 function favPage(){var a=Object.keys(favs).map(function(k){return favs[k]});app.innerHTML='<h2 class="ttl">♥ '+t("favs")+"</h2><div class=\"grid\">"+(a.length?a.map(card).join(""):'<div class="msg">'+t("nofav")+"</div>")+"</div>";xl(app)}
+
 /* ---------- project ---------- */
 function pick(vs){var ok=vs.filter(function(v){return(!ver||v.game_versions.indexOf(ver)>-1)&&(!ldr||v.loaders.indexOf(ldr)>-1)});var a=ok.length?ok:vs;return{v:a.find(function(v){return v.version_type=="release"})||a[0],ok:ok.length>0||(!ver&&!ldr)}}
 function fileOf(v){return v&&v.files&&(v.files.find(function(f){return f.primary})||v.files[0])}
@@ -224,7 +227,8 @@ else body='<div class="md">'+md(p.body)+"</div>";
 var gv=gsort((p.game_versions||[]).filter(function(g){return GI[g]!=null})),side='<div class="box"><h4>'+t("compat")+'</h4><div class="note">Minecraft: Java Edition</div><div class="chips">'+gv.map(function(g){return"<span>"+esc(g)+"</span>"}).join("")+"</div><h4>"+t("plat")+'</h4><div class="chips">'+(p.loaders||[]).map(function(g){return"<span>"+esc(g)+"</span>"}).join("")+"</div><h4>"+t("env")+'</h4><div class="chips">'+(p.client_side&&p.client_side!="unsupported"?"<span>"+t("client")+"</span>":"")+(p.server_side&&p.server_side!="unsupported"?"<span>"+t("server")+"</span>":"")+"</div></div>";
 var lk=[[p.source_url,t("src")],[p.issues_url,t("iss")],[p.wiki_url,t("wiki")],[p.discord_url,t("disc")],["https://modrinth.com/"+p.project_type+"/"+p.slug,t("orig")]].filter(function(x){return safe(x[0])}).map(function(x){return'<a href="'+safe(x[0])+'" target="_blank" rel="noopener">'+x[1]+"</a>"}).join("");
 side+='<div class="box"><h4>'+t("links")+"</h4>"+lk+"</div>"+(p.license&&p.license.name?'<div class="box"><h4>'+t("lic")+"</h4>"+esc(p.license.name)+"</div>":"")+(CUR.mem.length?'<div class="box"><h4>'+t("crt")+"</h4>"+CUR.mem.map(function(m){return'<div class="cr"><img src="'+safe(m.user.avatar_url)+'" alt="" onerror="this.remove()"><span>'+esc(m.user.username)+"</span></div>"}).join("")+"</div>":"");
-app.innerHTML='<div class="ph"'+phStyle(p)+'>'+icon(n)+'<div class="in"><h1>'+esc(p.title)+"</h1><p data-x>"+esc(p.description)+'</p><div class="tg"><i>'+num(p.downloads)+" "+t("dls")+'</i><i>'+num(p.followers)+" "+t("fol")+"</i>"+(p.categories||[]).slice(0,4).map(chip).join("")+'</div></div><div class="act">'+dlb+heart(n,1)+'</div></div><div class="pt">'+tabs+'</div><div class="pg"><div>'+body+"</div><aside>"+side+"</aside></div>";post(tab,p,vs)}
+app.innerHTML='<div class="ph"'+phStyle(p)+'>'+icon(n)+'<div class="in"><h1>'+esc(p.title)+"</h1><p data-x>"+esc(p.description)+'</p><div class="tg"><i data-c="'+esc(p.id)+'|d|'+(p.downloads||0)+'">'+cn(p.id,"d",null,p.downloads)+"</i><i data-c="'+esc(p.id)+'|f|'+(p.followers||0)+'">'+cn(p.id,"f",null,p.followers)+"</i>"+(p.categories||[]).slice(0,4).map(chip).join("")+'</div></div><div class="act">'+dlb+heart(n,1)+'</div></div><div class="pt">'+tabs+'</div><div class="pg"><div>'+body+"</div><aside>"+side+"</aside></div>";post(tab,p,vs)}
+
 /* ---------- auth ---------- */
 function su(path,body,extra){return fetch(SUPA_URL+"/auth/v1"+path,{method:body?"POST":"GET",headers:Object.assign({apikey:SUPA_KEY,"Content-Type":"application/json"},extra||{}),body:body?JSON.stringify(body):undefined}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.msg||j.error_description||j.message||r.status);return j})})}
 function modal(h){var m=$("modal");m.innerHTML=h;m.className=h?"on":""}
@@ -233,6 +237,7 @@ modal('<div class="dlg"><h3>'+t("signin")+"</h3>"+(SUPA_URL?"":'<p class="note">
 function login(tok,u){if(!u||!u.email||!(u.email_confirmed_at||u.confirmed_at))throw new Error(t("needmail"));sess={email:u.email,tok:tok};ss("smd_sess",sess);modal("");head()}
 function oauth(h){var P=new URLSearchParams(h.replace(/^#/,"")),tok=P.get("access_token");history.replaceState(null,"",location.pathname+"#/");
 su("/user",null,{Authorization:"Bearer "+tok}).then(function(u){login(tok,u)}).catch(function(e){alert(e.message)}).then(route)}
+
 /* ---------- events ---------- */
 document.addEventListener("click",function(e){var el=e.target,dl=el.closest("[data-dl]");if(dl){var da=dl.dataset.dl.split("|");track(da[0],da[1]);return}
 var b=el.closest("[data-h]");if(b){e.stopPropagation();var id=b.dataset.h;if(favs[id]){delete favs[id];fbPut(id+"/f",-1)}else if(REG[id]){favs[id]=REG[id];fbPut(id+"/f",1)}ss("smd_favs",favs);toast(favs[id]?t("favadd"):t("favdel"));head();document.querySelectorAll('[data-h="'+id+'"]').forEach(function(x){x.classList.toggle("on",!!favs[id])});if(location.hash=="#/fav")favPage();return}
